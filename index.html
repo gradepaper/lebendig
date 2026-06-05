@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Lebendig Countdown</title>
+  <meta name="description" content="Counting up from May 18, 2026 — and everything Mr. Lebendig could have done in that time." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow">Counting up since</p>
+      <h1 class="start-date">May 18, 2026 &middot; 8:00&nbsp;AM&nbsp;EST</h1>
 
+      <div class="timer" id="timer" aria-live="polite">
+        <div class="unit">
+          <span class="value" id="days">0</span>
+          <span class="label">days</span>
+        </div>
+        <div class="unit">
+          <span class="value" id="hours">0</span>
+          <span class="label">hours</span>
+        </div>
+        <div class="unit">
+          <span class="value" id="minutes">0</span>
+          <span class="label">minutes</span>
+        </div>
+        <div class="unit">
+          <span class="value" id="seconds">0</span>
+          <span class="label">seconds</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="activities">
+      <h2>In this time, Mr. Lebendig could have:</h2>
+      <ul class="activity-list" id="activityList"></ul>
+    </section>
+
+    <footer class="foot">
+      <p>Time keeps moving. So could you.</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
