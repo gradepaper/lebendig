@@ -1,5 +1,5 @@
 /* ===========================================================================
-   MR. LEBENDIG — a print-zine / neo-brutalist counter.
+   A print-zine / neo-brutalist grading counter.
    Type: Fraunces (editorial serif) clashing with Space Mono (odometer).
    Palette: warm paper, ink, vermillion, cobalt, acid gold.
    =========================================================================== */
@@ -60,41 +60,26 @@ body::before {
 
 /* ---------- Masthead ---------------------------------------------------- */
 .masthead {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
   border-bottom: 4px solid var(--ink);
   padding-bottom: 22px;
   margin-bottom: 48px;
 }
 
 .kicker {
-  font-size: 0.78rem;
+  font-size: clamp(0.78rem, 2.4vw, 0.95rem);
   letter-spacing: 0.32em;
+  line-height: 1.5;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  font-weight: 700;
 }
 
-.logo {
-  font-family: "Fraunces", Georgia, serif;
-  font-weight: 900;
-  line-height: 0.82;
-  letter-spacing: -0.02em;
-  font-size: clamp(2.4rem, 6vw, 3.6rem);
-  text-transform: uppercase;
-}
-
-.logo-big {
-  display: inline-block;
-  font-style: italic;
-  font-size: clamp(4rem, 16vw, 8.5rem);
-  color: var(--red);
-  text-shadow: 4px 4px 0 var(--ink);
-}
-
-/* Rotated wax-stamp in the top-right of the masthead. */
+/* Rotated wax-stamp anchored to the right of the masthead. */
 .stamp {
-  position: absolute;
-  top: 4px;
-  right: 0;
+  flex: none;
   transform: rotate(8deg);
   border: 3px solid var(--ink);
   border-radius: 50%;
