@@ -3,43 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Lebendig Countdown</title>
-  <meta name="description" content="Counting up from May 18, 2026 — and everything Mr. Lebendig could have done in that time." />
+  <title>MR. LEBENDIG — still going</title>
+  <meta name="description" content="A live counter ticking up from May 18, 2026 — and everything Mr. Lebendig could've done in that time." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,600;1,9..144,900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="wrap">
-    <header class="hero">
-      <p class="eyebrow">Counting up since</p>
-      <h1 class="start-date">May 18, 2026 &middot; 8:00&nbsp;AM&nbsp;EST</h1>
+  <main class="sheet">
+    <header class="masthead">
+      <p class="kicker">a live experiment in elapsed time</p>
+      <h1 class="logo">MR.<br /><span class="logo-big">LEBENDIG</span></h1>
+      <p class="stamp">est. <br />05·18·26</p>
+    </header>
 
+    <section class="timer-stage" aria-label="elapsed time">
+      <p class="pre-timer"><span class="pulse"></span>It has been</p>
       <div class="timer" id="timer" aria-live="polite">
-        <div class="unit">
+        <div class="unit u-days">
           <span class="value" id="days">0</span>
           <span class="label">days</span>
         </div>
-        <div class="unit">
+        <div class="unit u-hours">
           <span class="value" id="hours">0</span>
-          <span class="label">hours</span>
+          <span class="label">hrs</span>
         </div>
-        <div class="unit">
+        <div class="unit u-minutes">
           <span class="value" id="minutes">0</span>
-          <span class="label">minutes</span>
+          <span class="label">min</span>
         </div>
-        <div class="unit">
+        <div class="unit u-seconds">
           <span class="value" id="seconds">0</span>
-          <span class="label">seconds</span>
+          <span class="label">sec</span>
         </div>
       </div>
-    </header>
+      <p class="post-timer">
+        since we submitted the paper.
+        <em>When will he grade it?</em>
+      </p>
+      <p class="fine-print">Counting up from May&nbsp;18th, 8&nbsp;AM&nbsp;EST</p>
+    </section>
 
     <section class="activities">
-      <h2>In this time, Mr. Lebendig could have:</h2>
+      <h2 class="acts-title">
+        In this time, Mr.&nbsp;Lebendig could've—
+        <span class="underline" aria-hidden="true"></span>
+      </h2>
       <ul class="activity-list" id="activityList"></ul>
     </section>
 
     <footer class="foot">
-      <p>Time keeps moving. So could you.</p>
+      <p class="foot-stamp">TIME KEEPS MOVING · SO COULD YOU</p>
     </footer>
   </main>
 
