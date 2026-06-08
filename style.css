@@ -265,10 +265,13 @@ body {
   visibility: hidden;
   pointer-events: none;
 }
-.jumpscare img {
-  display: block;
+.jumpscare .face {
   width: min(70vmin, 460px);    /* a decent, centred size — not the whole screen */
-  height: auto;
+  aspect-ratio: 1 / 1;
+  background-color: #000;       /* background-image (the face) comes from face.css */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   border-radius: 8px;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 30px 80px rgba(0, 0, 0, 0.7);
   transform: scale(0.6);
@@ -278,7 +281,7 @@ body {
   visibility: visible;
   animation: scare 0.85s ease forwards;
 }
-.jumpscare.active img {
+.jumpscare.active .face {
   animation: scarePop 0.85s ease forwards;
 }
 /* backdrop: snap in, hold, fade out */
