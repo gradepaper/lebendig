@@ -3,59 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Still going — a live grading counter</title>
-  <meta name="description" content="A live counter ticking up from May 18, 2026 — and everything he could've done in the time it's taking to grade the paper." />
+  <title>WHEN WILL HE FINISH? (PAUSE)</title>
+  <meta name="description" content="Two clocks ticking up while one paper waits to be graded — and everything he could've done in the time it's taking." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,600;1,9..144,900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="sheet">
-    <header class="masthead">
-      <p class="kicker">a live experiment<br />in elapsed time</p>
-      <p class="stamp">est.<br />05·18·26</p>
-    </header>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
 
-    <section class="timer-stage" aria-label="elapsed time">
-      <p class="pre-timer"><span class="pulse"></span>It has been</p>
-      <div class="timer" id="timer" aria-live="polite">
-        <div class="unit u-days">
-          <span class="value" id="days">0</span>
-          <span class="label">days</span>
-        </div>
-        <div class="unit u-hours">
-          <span class="value" id="hours">0</span>
-          <span class="label">hrs</span>
-        </div>
-        <div class="unit u-minutes">
-          <span class="value" id="minutes">0</span>
-          <span class="label">min</span>
-        </div>
-        <div class="unit u-seconds">
-          <span class="value" id="seconds">0</span>
-          <span class="label">sec</span>
-        </div>
+  <main class="stage">
+
+    <!-- ================= MAIN TIMER ================= -->
+    <section class="board board--main" aria-label="time since the paper was submitted">
+      <p class="overline"><span class="blip"></span>It has been</p>
+
+      <div class="clock clock--main" aria-live="polite">
+        <div class="cell c1"><span class="num" id="m-days">0</span><span class="cap">days</span></div>
+        <div class="cell c2"><span class="num" id="m-hours">00</span><span class="cap">hrs</span></div>
+        <div class="cell c3"><span class="num" id="m-minutes">00</span><span class="cap">min</span></div>
+        <div class="cell c4"><span class="num" id="m-seconds">00</span><span class="cap">sec</span></div>
       </div>
-      <p class="post-timer">
-        since we submitted the paper.
-        <em>When will he grade it?</em>
-      </p>
-      <p class="fine-print">Counting up from May&nbsp;18th, 8&nbsp;AM&nbsp;EST</p>
+
+      <p class="since">since we submitted the paper.</p>
+      <p class="ask">When will he finish? <span class="paren">(Pause)</span></p>
+      <p class="cta">FINISH GRADING</p>
     </section>
 
-    <section class="activities">
-      <h2 class="acts-title">
-        In this time, he could've—
-        <span class="underline" aria-hidden="true"></span>
-      </h2>
-      <ul class="activity-list" id="activityList"></ul>
+    <div class="rip" aria-hidden="true"></div>
+
+    <!-- ================= SECOND (MINI) TIMER ================= -->
+    <section class="board board--mini" aria-label="time since the optional retake was due">
+      <p class="overline overline--mini"><span class="blip"></span>It has been</p>
+
+      <div class="clock clock--mini" aria-live="polite">
+        <div class="cell c1"><span class="num" id="r-days">0</span><span class="cap">days</span></div>
+        <div class="cell c2"><span class="num" id="r-hours">00</span><span class="cap">hrs</span></div>
+        <div class="cell c3"><span class="num" id="r-minutes">00</span><span class="cap">min</span></div>
+        <div class="cell c4"><span class="num" id="r-seconds">00</span><span class="cap">sec</span></div>
+      </div>
+
+      <p class="since since--mini">since the optional retake was due.</p>
+      <p class="ask ask--mini">When will he finish? <span class="paren">(Pause)</span></p>
+      <p class="cta cta--mini">FINISH GRADING</p>
     </section>
 
-    <footer class="foot">
-      <p class="foot-stamp">TIME KEEPS MOVING · SO COULD YOU</p>
-    </footer>
+    <!-- ================= ACTIVITIES ================= -->
+    <section class="loot">
+      <h2 class="loot-title">In this time, he could've—</h2>
+      <ul class="loot-list" id="activityList"></ul>
+    </section>
   </main>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>TIME KEEPS MOVING&nbsp;&nbsp;★&nbsp;&nbsp;SO COULD HE&nbsp;&nbsp;★&nbsp;&nbsp;STILL UNGRADED&nbsp;&nbsp;★&nbsp;&nbsp;</span>
+      <span>TIME KEEPS MOVING&nbsp;&nbsp;★&nbsp;&nbsp;SO COULD HE&nbsp;&nbsp;★&nbsp;&nbsp;STILL UNGRADED&nbsp;&nbsp;★&nbsp;&nbsp;</span>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

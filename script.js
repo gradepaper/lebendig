@@ -1,31 +1,39 @@
 // ---------------------------------------------------------------------------
-// Grading counter — counts UP from May 18, 2026, 8:00 AM Eastern.
-// On that date US Eastern is on daylight time (EDT, UTC-4), not EST (UTC-5).
+// Two count-up clocks for one ungraded paper.
+//   MAIN:   counts up from May 18, 2026, 8:00 AM Eastern (paper submitted)
+//   RETAKE: counts up from June 4, 2026, 8:00 AM Eastern (optional retake due)
+// On both dates US Eastern is on daylight time (EDT, UTC-4), not EST (UTC-5).
 // ---------------------------------------------------------------------------
 
-const START = new Date("2026-05-18T08:00:00-04:00");
+const START_MAIN   = new Date("2026-05-18T08:00:00-04:00");
+const START_RETAKE = new Date("2026-06-04T08:00:00-04:00");
 
 const HOUR = 3600;
 const DAY = 24 * HOUR;
 
-// Factual-ish timeframes, expressed in hours. Sorted ascending by duration.
+// Crazier, more out-of-pocket "he could've—" list. Hours are best-effort.
+// Sorted ascending by duration.
 const ACTIVITIES = [
+  { name: "demolish an entire large pizza, solo", hours: 1 },
   { name: "watch a feature-length film", hours: 2 },
-  { name: "bake a loaf of sourdough from scratch", hours: 4 },
-  { name: "binge an entire season of TV", hours: 12 },
-  { name: "read a 300-page novel", hours: 30 },
-  { name: "read the whole Lord of the Rings trilogy", hours: 60 },
-  { name: "learn to juggle three balls", hours: 48 },          // ~2 days
-  { name: "learn to solve a Rubik's Cube", hours: 72 },        // ~3 days
-  { name: "build a personal website from scratch", hours: 96 },// ~4 days
-  { name: "learn 100 words of a new language", hours: 168 },   // 1 week
-  { name: "pick up a brand-new hobby", hours: 504 },           // 3 weeks
-  { name: "grow radishes from seed to harvest", hours: 672 },  // 4 weeks
-  { name: "write a 50,000-word novel draft", hours: 720 },     // 30 days
-  { name: "train for a 5K from the couch", hours: 1008 },      // 6 weeks
-  { name: "get into noticeably better shape", hours: 2016 },   // 12 weeks
-  { name: "hike the full Appalachian Trail", hours: 3960 },    // ~165 days
-  { name: "gestate a human baby", hours: 6720 },               // 280 days
+  { name: "get a regrettable tattoo and start regretting it", hours: 3 },
+  { name: "bake (and slightly burn) sourdough from scratch", hours: 5 },
+  { name: "binge an entire season of TV in one sitting", hours: 12 },
+  { name: "drive from NYC straight to Chicago", hours: 13 },
+  { name: "fly to Tokyo, slurp one bowl of ramen, fly home", hours: 30 },
+  { name: "memorize 1,000 digits of pi", hours: 45 },
+  { name: "learn to juggle three flaming torches", hours: 50 },
+  { name: "road-trip across the entire continental US", hours: 60 },
+  { name: "solve a Rubik's Cube blindfolded", hours: 72 },
+  { name: "build this entire website from scratch — twice", hours: 96 },
+  { name: "become conversational in a dead language", hours: 168 },
+  { name: "adopt a brand-new personality", hours: 504 },
+  { name: "grow radishes from seed to harvest", hours: 672 },
+  { name: "write a 50,000-word novel nobody asked for", hours: 720 },
+  { name: "train for a 5K straight off the couch", hours: 1008 },
+  { name: "get into genuinely alarming good shape", hours: 2016 },
+  { name: "hike the entire Appalachian Trail", hours: 3960 },
+  { name: "gestate an entire human being", hours: 6720 },
 ].sort((a, b) => a.hours - b.hours);
 
 // ---------------------------------------------------------------------------
@@ -68,18 +76,44 @@ function unlockLabel(secondsRemaining) {
   return `unlocks in ${mins} minute${mins === 1 ? "" : "s"}`;
 }
 
+function elapsedSecondsSince(start) {
+  let s = Math.floor((Date.now() - start.getTime()) / 1000);
+  return s < 0 ? 0 : s;
+}
+
 // ---------------------------------------------------------------------------
-// Rendering
+// Clocks
 // ---------------------------------------------------------------------------
 
-const els = {
-  days: document.getElementById("days"),
-  hours: document.getElementById("hours"),
-  minutes: document.getElementById("minutes"),
-  seconds: document.getElementById("seconds"),
-  list: document.getElementById("activityList"),
-};
+function makeClock(prefix) {
+  return {
+    days: document.getElementById(`${prefix}-days`),
+    hours: document.getElementById(`${prefix}-hours`),
+    minutes: document.getElementById(`${prefix}-minutes`),
+    seconds: document.getElementById(`${prefix}-seconds`),
+  };
+}
 
+const mainClock = makeClock("m");
+const retakeClock = makeClock("r");
+
+function renderClock(clock, elapsedSeconds) {
+  const days = Math.floor(elapsedSeconds / DAY);
+  const hours = Math.floor((elapsedSeconds % DAY) / HOUR);
+  const minutes = Math.floor((elapsedSeconds % HOUR) / 60);
+  const seconds = elapsedSeconds % 60;
+
+  clock.days.textContent = days;
+  clock.hours.textContent = pad(hours);
+  clock.minutes.textContent = pad(minutes);
+  clock.seconds.textContent = pad(seconds);
+}
+
+// ---------------------------------------------------------------------------
+// Activities (driven by the main clock — the longest-running wait)
+// ---------------------------------------------------------------------------
+
+const list = document.getElementById("activityList");
 let renderedSignature = "";
 
 function buildActivityList(elapsedSeconds) {
@@ -92,7 +126,7 @@ function buildActivityList(elapsedSeconds) {
   if (signature === renderedSignature) return;
   renderedSignature = signature;
 
-  els.list.innerHTML = "";
+  list.innerHTML = "";
 
   for (const activity of ACTIVITIES) {
     const costSeconds = activity.hours * HOUR;
@@ -113,26 +147,19 @@ function buildActivityList(elapsedSeconds) {
 
     li.appendChild(name);
     li.appendChild(meta);
-    els.list.appendChild(li);
+    list.appendChild(li);
   }
 }
 
+// ---------------------------------------------------------------------------
+// Loop
+// ---------------------------------------------------------------------------
+
 function tick() {
-  const now = Date.now();
-  let elapsedSeconds = Math.floor((now - START.getTime()) / 1000);
-  if (elapsedSeconds < 0) elapsedSeconds = 0;
-
-  const days = Math.floor(elapsedSeconds / DAY);
-  const hours = Math.floor((elapsedSeconds % DAY) / HOUR);
-  const minutes = Math.floor((elapsedSeconds % HOUR) / 60);
-  const seconds = elapsedSeconds % 60;
-
-  els.days.textContent = days;
-  els.hours.textContent = pad(hours);
-  els.minutes.textContent = pad(minutes);
-  els.seconds.textContent = pad(seconds);
-
-  buildActivityList(elapsedSeconds);
+  const mainElapsed = elapsedSecondsSince(START_MAIN);
+  renderClock(mainClock, mainElapsed);
+  renderClock(retakeClock, elapsedSecondsSince(START_RETAKE));
+  buildActivityList(mainElapsed);
 }
 
 tick();
