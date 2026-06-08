@@ -141,6 +141,36 @@ function buildActivityList(elapsedSeconds) {
 }
 
 // ---------------------------------------------------------------------------
+// Jumpscare — every time a full minute rolls over, flash his face, fade it in
+// and out, and shake the whole page.
+// ---------------------------------------------------------------------------
+
+const scare = document.getElementById("jumpscare");
+let lastMinute = Math.floor(Date.now() / 60000);
+
+function triggerJumpscare() {
+  // Reset any in-flight animation so a fresh one always plays.
+  scare.classList.remove("active");
+  document.body.classList.remove("shaking");
+  void scare.offsetWidth; // force reflow to restart the keyframes
+  scare.classList.add("active");
+  document.body.classList.add("shaking");
+}
+
+function clearJumpscare() {
+  scare.classList.remove("active");
+  document.body.classList.remove("shaking");
+}
+scare.addEventListener("animationend", clearJumpscare);
+
+function maybeJumpscare() {
+  const minute = Math.floor(Date.now() / 60000);
+  if (minute === lastMinute) return;
+  lastMinute = minute;
+  triggerJumpscare();
+}
+
+// ---------------------------------------------------------------------------
 // Loop
 // ---------------------------------------------------------------------------
 
@@ -149,6 +179,7 @@ function tick() {
   renderClock(mainClock, mainElapsed);
   renderClock(retakeClock, elapsedSecondsSince(START_RETAKE));
   buildActivityList(mainElapsed);
+  maybeJumpscare();
 }
 
 tick();
