@@ -11,29 +11,23 @@ const START_RETAKE = new Date("2026-06-04T08:00:00-04:00");
 const HOUR = 3600;
 const DAY = 24 * HOUR;
 
-// Crazier, more out-of-pocket "he could've—" list. Hours are best-effort.
-// Sorted ascending by duration.
+// Plainly-stated things, sorted ascending by how long they take in hours.
 const ACTIVITIES = [
-  { name: "demolish an entire large pizza, solo", hours: 1 },
   { name: "watch a feature-length film", hours: 2 },
-  { name: "get a regrettable tattoo and start regretting it", hours: 3 },
-  { name: "bake (and slightly burn) sourdough from scratch", hours: 5 },
-  { name: "binge an entire season of TV in one sitting", hours: 12 },
-  { name: "drive from NYC straight to Chicago", hours: 13 },
-  { name: "fly to Tokyo, slurp one bowl of ramen, fly home", hours: 30 },
-  { name: "memorize 1,000 digits of pi", hours: 45 },
-  { name: "learn to juggle three flaming torches", hours: 50 },
-  { name: "road-trip across the entire continental US", hours: 60 },
-  { name: "solve a Rubik's Cube blindfolded", hours: 72 },
-  { name: "build this entire website from scratch — twice", hours: 96 },
-  { name: "become conversational in a dead language", hours: 168 },
-  { name: "adopt a brand-new personality", hours: 504 },
-  { name: "grow radishes from seed to harvest", hours: 672 },
-  { name: "write a 50,000-word novel nobody asked for", hours: 720 },
-  { name: "train for a 5K straight off the couch", hours: 1008 },
-  { name: "get into genuinely alarming good shape", hours: 2016 },
+  { name: "bake a loaf of bread from scratch", hours: 4 },
+  { name: "binge a full season of television", hours: 12 },
+  { name: "drive from New York to Chicago", hours: 13 },
+  { name: "fly to Tokyo and back", hours: 28 },
+  { name: "read a 300-page novel", hours: 30 },
+  { name: "drive across the country, coast to coast", hours: 45 },
+  { name: "read the entire Lord of the Rings trilogy", hours: 60 },
+  { name: "learn to solve a Rubik's Cube", hours: 72 },
+  { name: "learn 100 words of a new language", hours: 168 },
+  { name: "grow vegetables from seed to harvest", hours: 672 },
+  { name: "write a 50,000-word novel", hours: 720 },
+  { name: "train for a 5K from scratch", hours: 1008 },
   { name: "hike the entire Appalachian Trail", hours: 3960 },
-  { name: "gestate an entire human being", hours: 6720 },
+  { name: "gestate a human being", hours: 6720 },
 ].sort((a, b) => a.hours - b.hours);
 
 // ---------------------------------------------------------------------------
@@ -66,18 +60,18 @@ function durationLabel(hours) {
 function unlockLabel(secondsRemaining) {
   if (secondsRemaining >= DAY) {
     const days = Math.ceil(secondsRemaining / DAY);
-    return `unlocks in ${days} day${days === 1 ? "" : "s"}`;
+    return `in ${days} day${days === 1 ? "" : "s"}`;
   }
   if (secondsRemaining >= HOUR) {
     const hrs = Math.ceil(secondsRemaining / HOUR);
-    return `unlocks in ${hrs} hour${hrs === 1 ? "" : "s"}`;
+    return `in ${hrs} hour${hrs === 1 ? "" : "s"}`;
   }
   const mins = Math.max(1, Math.ceil(secondsRemaining / 60));
-  return `unlocks in ${mins} minute${mins === 1 ? "" : "s"}`;
+  return `in ${mins} minute${mins === 1 ? "" : "s"}`;
 }
 
 function elapsedSecondsSince(start) {
-  let s = Math.floor((Date.now() - start.getTime()) / 1000);
+  const s = Math.floor((Date.now() - start.getTime()) / 1000);
   return s < 0 ? 0 : s;
 }
 
@@ -98,15 +92,10 @@ const mainClock = makeClock("m");
 const retakeClock = makeClock("r");
 
 function renderClock(clock, elapsedSeconds) {
-  const days = Math.floor(elapsedSeconds / DAY);
-  const hours = Math.floor((elapsedSeconds % DAY) / HOUR);
-  const minutes = Math.floor((elapsedSeconds % HOUR) / 60);
-  const seconds = elapsedSeconds % 60;
-
-  clock.days.textContent = days;
-  clock.hours.textContent = pad(hours);
-  clock.minutes.textContent = pad(minutes);
-  clock.seconds.textContent = pad(seconds);
+  clock.days.textContent = Math.floor(elapsedSeconds / DAY);
+  clock.hours.textContent = pad(Math.floor((elapsedSeconds % DAY) / HOUR));
+  clock.minutes.textContent = pad(Math.floor((elapsedSeconds % HOUR) / 60));
+  clock.seconds.textContent = pad(elapsedSeconds % 60);
 }
 
 // ---------------------------------------------------------------------------
@@ -142,7 +131,7 @@ function buildActivityList(elapsedSeconds) {
     const meta = document.createElement("span");
     meta.className = "meta";
     meta.textContent = unlocked
-      ? `takes ~${durationLabel(activity.hours)}`
+      ? `~${durationLabel(activity.hours)}`
       : unlockLabel(costSeconds - elapsedSeconds);
 
     li.appendChild(name);

@@ -3,66 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WHEN WILL HE FINISH? (PAUSE)</title>
-  <meta name="description" content="Two clocks ticking up while one paper waits to be graded — and everything he could've done in the time it's taking." />
+  <title>When will he finish? (Pause)</title>
+  <meta name="description" content="A clock counting up since the paper was submitted — and everything that could have been done in the time it's taken to grade it." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="scanlines" aria-hidden="true"></div>
-  <div class="noise" aria-hidden="true"></div>
-
   <main class="stage">
 
     <!-- ================= MAIN TIMER ================= -->
-    <section class="board board--main" aria-label="time since the paper was submitted">
-      <p class="overline"><span class="blip"></span>It has been</p>
+    <section class="board board--main">
+      <p class="overline">It has been</p>
 
-      <div class="clock clock--main" aria-live="polite">
-        <div class="cell c1"><span class="num" id="m-days">0</span><span class="cap">days</span></div>
-        <div class="cell c2"><span class="num" id="m-hours">00</span><span class="cap">hrs</span></div>
-        <div class="cell c3"><span class="num" id="m-minutes">00</span><span class="cap">min</span></div>
-        <div class="cell c4"><span class="num" id="m-seconds">00</span><span class="cap">sec</span></div>
+      <div class="hero" aria-live="polite">
+        <div class="hero-days">
+          <span class="big" id="m-days">0</span>
+          <span class="big-cap">days</span>
+        </div>
+        <p class="hero-sub">
+          <span id="m-hours">00</span><span class="colon">:</span><span id="m-minutes">00</span><span class="colon">:</span><span id="m-seconds">00</span>
+        </p>
       </div>
 
       <p class="since">since we submitted the paper.</p>
-      <p class="ask">When will he finish? <span class="paren">(Pause)</span></p>
+      <p class="ask">When will he finish? <span class="paper">(Pause)</span></p>
       <p class="cta">FINISH GRADING</p>
     </section>
 
-    <div class="rip" aria-hidden="true"></div>
-
     <!-- ================= SECOND (MINI) TIMER ================= -->
-    <section class="board board--mini" aria-label="time since the optional retake was due">
-      <p class="overline overline--mini"><span class="blip"></span>It has been</p>
+    <section class="board board--mini">
+      <p class="overline">It has been</p>
 
-      <div class="clock clock--mini" aria-live="polite">
-        <div class="cell c1"><span class="num" id="r-days">0</span><span class="cap">days</span></div>
-        <div class="cell c2"><span class="num" id="r-hours">00</span><span class="cap">hrs</span></div>
-        <div class="cell c3"><span class="num" id="r-minutes">00</span><span class="cap">min</span></div>
-        <div class="cell c4"><span class="num" id="r-seconds">00</span><span class="cap">sec</span></div>
+      <div class="hero hero--mini" aria-live="polite">
+        <div class="hero-days">
+          <span class="big" id="r-days">0</span>
+          <span class="big-cap">days</span>
+        </div>
+        <p class="hero-sub">
+          <span id="r-hours">00</span><span class="colon">:</span><span id="r-minutes">00</span><span class="colon">:</span><span id="r-seconds">00</span>
+        </p>
       </div>
 
-      <p class="since since--mini">since the optional retake was due.</p>
-      <p class="ask ask--mini">When will he finish? <span class="paren">(Pause)</span></p>
-      <p class="cta cta--mini">FINISH GRADING</p>
+      <p class="since">since the optional retake was due.</p>
+      <p class="ask">When will he finish? <span class="paper">(Pause)</span></p>
+      <p class="cta">FINISH GRADING</p>
     </section>
 
     <!-- ================= ACTIVITIES ================= -->
-    <section class="loot">
-      <h2 class="loot-title">In this time, he could've—</h2>
-      <ul class="loot-list" id="activityList"></ul>
+    <section class="list-section">
+      <h2 class="list-title">In this time, he could've—</h2>
+      <ul class="activity-list" id="activityList"></ul>
     </section>
-  </main>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
-      <span>TIME KEEPS MOVING&nbsp;&nbsp;★&nbsp;&nbsp;SO COULD HE&nbsp;&nbsp;★&nbsp;&nbsp;STILL UNGRADED&nbsp;&nbsp;★&nbsp;&nbsp;</span>
-      <span>TIME KEEPS MOVING&nbsp;&nbsp;★&nbsp;&nbsp;SO COULD HE&nbsp;&nbsp;★&nbsp;&nbsp;STILL UNGRADED&nbsp;&nbsp;★&nbsp;&nbsp;</span>
-    </div>
-  </div>
+  </main>
 
   <script src="script.js"></script>
 </body>
