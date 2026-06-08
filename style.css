@@ -279,7 +279,12 @@ body {
 }
 .jumpscare.active {
   visibility: visible;
-  animation: scare 0.85s ease forwards;
+  /* scare = the fade (opacity); shake = the screen-shake (transform). Different
+     properties, so they run together without fighting. The overlay stays
+     viewport-fixed because <body> is no longer transformed. */
+  animation:
+    scare 0.85s ease forwards,
+    shake 0.85s cubic-bezier(.36, .07, .19, .97) both;
 }
 .jumpscare.active .face {
   animation: scarePop 0.85s ease forwards;
@@ -299,8 +304,9 @@ body {
   100% { transform: scale(1.0); }
 }
 
-/* violently shake the entire page */
-body.shaking { animation: shake 0.85s cubic-bezier(.36, .07, .19, .97) both; }
+/* violently shake the page content (NOT <body> — transforming <body> would
+   break the overlay's viewport-fixed centering). */
+body.shaking .stage { animation: shake 0.85s cubic-bezier(.36, .07, .19, .97) both; }
 @keyframes shake {
   0%, 100%        { transform: translate(0, 0) rotate(0); }
   8%              { transform: translate(-14px, 8px)  rotate(-1.4deg); }
