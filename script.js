@@ -1,8 +1,9 @@
 // ---------------------------------------------------------------------------
-// Grading counter — counts UP from May 18, 2026, 8:00 AM EST (UTC-5).
+// Grading counter — counts UP from May 18, 2026, 8:00 AM Eastern.
+// On that date US Eastern is on daylight time (EDT, UTC-4), not EST (UTC-5).
 // ---------------------------------------------------------------------------
 
-const START = new Date("2026-05-18T08:00:00-05:00");
+const START = new Date("2026-05-18T08:00:00-04:00");
 
 const HOUR = 3600;
 const DAY = 24 * HOUR;
